@@ -1,0 +1,19 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+
+# AutoResearchClaw framework (cloned by setup.sh, not tracked)
+researchclaw/
+pyproject.toml
+prompts.default.yaml
+config.researchclaw.example.yaml
+
+# Claude
+.claude/
+
+# OS
+.DS_Store

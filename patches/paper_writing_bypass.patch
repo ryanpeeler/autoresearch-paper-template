@@ -1,0 +1,22 @@
+--- a/researchclaw/pipeline/stage_impls/_paper_writing.py
++++ b/researchclaw/pipeline/stage_impls/_paper_writing.py
+@@ -1603,10 +1603,19 @@
+
+     # R4-2: HARD BLOCK — refuse to write paper with no real data (ML/empirical domains)
+     # For non-empirical domains (math proofs, theoretical economics), allow proceeding
++    # For docs-first / review articles, always allow proceeding
+     _domain_id, _domain_name, _domain_venues = _detect_domain(
+         config.research.topic, config.research.domains
+     )
+     _empirical_domains = {"ml", "engineering", "biology", "chemistry"}
++    _project_mode_r4 = getattr(getattr(config, "project", None), "mode", "").lower()
+     if not has_real_metrics:
+-        if _domain_id in _empirical_domains:
++        if _project_mode_r4 in ("docs-first",):
++            logger.info(
++                "No experiment metrics found, but project mode is '%s' (review article). "
++                "Proceeding with paper draft based on literature synthesis.",
++                _project_mode_r4,
++            )
++        elif _domain_id in _empirical_domains:
+             logger.error(
