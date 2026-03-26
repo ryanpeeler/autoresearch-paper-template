@@ -84,12 +84,9 @@ if [ -f "patches/acp_client.py" ]; then
     echo "  Applied: ACP client (claude --print mode)"
 fi
 
-# Patch 2: Paper writing stage — docs-first bypass for no-metrics block
-if [ -f "patches/paper_writing_bypass.patch" ]; then
-    # Apply the patch, allowing it to fail gracefully if already applied
-    patch -N -p1 < patches/paper_writing_bypass.patch 2>/dev/null && \
-        echo "  Applied: docs-first no-metrics bypass" || \
-        echo "  Skipped: docs-first bypass (already applied or conflict)"
+# Patch 2: Paper writing stage — docs-first bypass for simulated data + no-metrics blocks
+if [ -f "patches/apply_docs_first_bypass.py" ]; then
+    python3 patches/apply_docs_first_bypass.py
 fi
 
 echo ""
